@@ -6,7 +6,7 @@ contract Ownable{
     address public owner;
     
     constructor() {
-        owner = msg.sender;
+        owner = msg.sender; 
     }
 
     event OwnerShipTransfer(address indexed oldOwner, address indexed newOwner);

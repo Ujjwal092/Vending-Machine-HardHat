@@ -9,18 +9,20 @@ module.exports = buildModule("VendingModule", (m) => {
   // We need to set an initial price when deploying the sodaVendor.
   // Let's set it to 0.01 ether. The `parseEther` function from ethers.js
   // is the standard way to convert a string like "0.01" into wei.
+
   const initialPrice = parseEther("0.01");
 
   // The 'm.contract()' function tells Ignition to deploy a contract.
   // First, we deploy our 'sodaVendor' contract.
   // The second argument is an array of constructor arguments.
+
   const sodaVendor = m.contract("sodaVendor", []);
-  
+
   // Hardhat Ignition is still evolving, and setting the price
   // via a separate call is a common pattern for now.
   // We can add calls to our contracts after deployment.
-  m.call(sodaVendor, "setPrice", [initialPrice]);
 
+  m.call(sodaVendor, "setPrice", [initialPrice]);
 
   // --- Deployment of the Vending Machine ---
   // The vendingMachine's constructor needs the address of the sodaVendor.
