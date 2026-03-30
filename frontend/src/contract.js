@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import abi from "./abi/VendingMachine.json";
+import abi from "./abi/vendingMachine.json";
 export const CONTRACT_ADDRESS = "0xaC8C7f94ABDE0485BbCC44fC470df0737e583453";
 
 export const getContract = async () => {
