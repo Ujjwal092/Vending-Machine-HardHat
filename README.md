@@ -22,7 +22,7 @@ A **full-stack decentralized vending machine dApp** built using **Solidity, Hard
 
 ## 🌐 Live Demo
 
->
+> https://vending-machine-hard-hat.vercel.app/
 
 ---
 
@@ -172,15 +172,15 @@ Before --
 
 After--
 
-p align="center">
+<p align="center">
 <img src="./screenshots/ss1 (1).png" width="800"/>
+</p>
 
 --Deployed Contract
 
-p align="center">
+<p align="center">
 <img src="./screenshots/test-result.png" width="800"/>
 
-</p>
 </p>
 ## 🤝 Contributing
 
