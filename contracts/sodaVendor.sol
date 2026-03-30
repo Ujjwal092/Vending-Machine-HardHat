@@ -4,10 +4,9 @@ pragma solidity ^0.8.20;
 import "./IoraclePrice.sol";
 import "./Ownable.sol";
 
-contract sodaVendor is IoraclePrice, Ownable{
+contract sodaVendor is IoraclePrice, Ownable {
     
-    uint public  price;
-
+    uint public price;
 
     constructor(){
         price = 1 ether;
@@ -18,6 +17,7 @@ contract sodaVendor is IoraclePrice, Ownable{
     }
 
     function setPrice(uint _price) public onlyOwner {
+        require(_price > 0, "Price must be greater than 0");
         price = _price;
     }
 }

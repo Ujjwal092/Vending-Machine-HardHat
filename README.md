@@ -1,17 +1,33 @@
-# 🥤 Vending Machine Smart Contract (Hardhat Project)
+# 🥤 Decentralized Vending Machine (Solidity + Hardhat)
 
-This project demonstrates a **decentralized vending machine system** built using **Solidity + Hardhat + Ignition**. Users can purchase soda using Ether, while the owner manages funds and inventory securely on the blockchain.
+A fully tested **decentralized vending machine system** built using **Solidity, Hardhat, and Ethers.js**, featuring **oracle-based dynamic pricing**, **owner-controlled inventory**, and **secure Ether transactions**.
 
 ---
 
 ## 🚀 Features
 
-- 🧾 Smart contract-based soda purchasing system
-- 💰 Secure Ether transactions
-- 🔐 Owner-only withdrawal functionality
-- 📦 Stock management (prevents buying when out of stock)
-- ⚡ Event emission on successful purchase
-- 🧪 Fully tested using Hardhat + Chai
+- 🛒 Buy soda using Ether
+- 💰 Dynamic pricing via oracle contract
+- 🔐 Owner-only withdrawal of funds
+- 📦 Inventory management system
+- 🔁 Owner-controlled restocking
+- ❌ Reverts on incorrect payment & out-of-stock
+- 📢 Event emission on successful purchase
+- 🧪 Full test coverage using Hardhat & Chai
+- ⛽ Gas usage reporting
+
+---
+
+## 🧠 Architecture
+
+```text
+User → VendingMachine → SodaVendor (Oracle)
+                     ↘ Ownable (Access Control)
+```
+
+- **VendingMachine** → Handles purchasing logic & stock
+- **SodaVendor (Oracle)** → Provides dynamic pricing
+- **Ownable** → Restricts critical functions to owner
 
 ---
 
@@ -28,11 +44,23 @@ This project demonstrates a **decentralized vending machine system** built using
 ## 📂 Project Structure
 
 ```
-├── contracts/          # Smart contracts
-├── ignition/           # Deployment modules (Ignition)
-├── test/               # Test cases
-├── scripts/            # Optional scripts
-├── hardhat.config.js   # Hardhat configuration
+├── contracts/
+│   ├── VendingMachine.sol
+│   ├── SodaVendor.sol
+│   ├── Ownable.sol
+│   └── IoraclePrice.sol
+│
+├── ignition/
+│   └── modules/
+│
+├── test/
+│   └── VendingMachine.test.js
+│
+├── screenshots/
+│   └── test-result.png
+│
+├── hardhat.config.js
+└── package.json
 ```
 
 ---
@@ -53,7 +81,7 @@ npm install
 npx hardhat test
 ```
 
-For gas reporting:
+### ⛽ Gas Report
 
 ```bash
 REPORT_GAS=true npx hardhat test
@@ -77,25 +105,44 @@ npx hardhat ignition deploy ./ignition/modules/Deploy.js
 
 ---
 
+## 📸 Test Results & Gas Report
+
+<p align="center">
+  <img src="./screenshots/test-result.png" width="850"/>
+</p>
+
+---
+
 ## 📜 Smart Contract Functionalities
 
 ### 🛒 Buy Soda
 
-- Users can buy soda by sending exact Ether
-- Reverts if:
+- Fetches price from oracle contract
+- Requires exact Ether payment
+- Reduces stock after successful purchase
 
-  - Incorrect payment
-  - Stock is empty
+---
 
-### 🔐 Withdraw Funds
+### 🔁 Restock Inventory
+
+- Only owner can restock
+- Prevents invalid input (zero stock)
+
+---
+
+### 💰 Withdraw Funds
 
 - Only owner can withdraw contract balance
-- Prevents unauthorized access
+- Secure transfer of full balance
 
-### 📦 Stock Handling
+---
 
-- Tracks soda quantity
-- Stops purchases when stock = 0
+### 💲 Dynamic Pricing (Oracle)
+
+- Price managed in separate contract (`SodaVendor`)
+- Can be updated without redeploying vending machine
+
+---
 
 ### 📢 Events
 
@@ -105,37 +152,37 @@ npx hardhat ignition deploy ./ignition/modules/Deploy.js
 
 ## 🧪 Test Coverage
 
-Your test suite includes:
+Includes comprehensive test cases:
 
 - ✔️ Owner validation
-- ✔️ Payment validation (revert cases)
-- ✔️ Unauthorized withdrawal protection
+- ✔️ Payment validation (correct & incorrect)
+- ✔️ Unauthorized withdrawal prevention
 - ✔️ Stock depletion handling
-- ✔️ Balance transfer verification
-- ✔️ Event emission testing
-
-(Example test logic implemented using Hardhat fixtures and Chai assertions)
-
----
-
-## 📌 Example Test Snippet
-
-Refer to the full test file here:
+- ✔️ Restocking functionality
+- ✔️ Oracle price updates
+- ✔️ Event emission verification
 
 ---
 
 ## 📈 Future Improvements
 
-- 🧠 Dynamic pricing system
-- 📊 Frontend UI (React + Ethers)
-- 🔄 Restocking functionality
-- 🌐 Deploy on testnet (Sepolia / Goerli)
+- 🎨 Frontend (React + Ethers.js)
+- 🌐 Deployment on Sepolia testnet
+- 🧠 Chainlink oracle integration
+- 🛍 Multi-product vending system
+- 📊 Admin dashboard
+
+---
+
+## 🧾 Resume Highlight
+
+> Built a decentralized vending machine smart contract with oracle-based dynamic pricing, owner-controlled inventory, and comprehensive test coverage using Hardhat.
 
 ---
 
 ## 🤝 Contributing
 
-Feel free to fork this repo and improve the project!
+Feel free to fork and improve this project!
 
 ---
 
@@ -144,6 +191,11 @@ Feel free to fork this repo and improve the project!
 MIT License
 
 ---
+
+## 💡 Author
+
+**Ujjwal Kumar**
+Built with ❤️ using Solidity & Hardhat
 
 ## 💡 Author
 

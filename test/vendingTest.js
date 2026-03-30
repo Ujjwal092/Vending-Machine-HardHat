@@ -95,7 +95,7 @@ describe("Testing our Vending Machine", function () {
 
     await expect(
       vendingMachine.connect(owner).withdraw(),
-    ).to.changeEtherBalances([vendingMachine, owner], [-price, price]);
+    ).to.changeEtherBalances([vendingMachine, owner], [-price, price]); //this changeEtherBalances assertion checks that the balance of the vending machine decreases by the price of the soda and the balance of the owner increases by the same amount after the withdrawal transaction is executed. If the balances do not change as expected, the test will fail.and handles gas fees and other factors
   });
 
   //test 6: Check if the correct event is emitted when a soda is purchased
@@ -108,5 +108,44 @@ describe("Testing our Vending Machine", function () {
     await expect(vendingMachine.connect(buyer).buySoda({ value: price }))
       .to.emit(vendingMachine, "SodaPurchase")
       .withArgs(buyer.address, 1);
+  });
+
+  //test 7: Check if the successful restock of soda
+  it("Should allow owner to restock inventory", async function () {
+    const { owner, vendingMachine } = await loadFixture(vendingMachineDeploy);
+    const initialStock = await vendingMachine.soda();
+    await vendingMachine.connect(owner).addStock(50);
+    const updatedStock = await vendingMachine.soda();
+    await expect(updatedStock).to.equal(initialStock + 50n);
+  });
+
+  //test 8: Check if the vending machine prevents non-owners from restocking inventory
+  it("Should prevent non-owner from restocking", async function () {
+    const { buyer, vendingMachine } = await loadFixture(vendingMachineDeploy);
+
+    await expect(vendingMachine.connect(buyer).addStock(50)).to.be.revertedWith(
+      "You are not a Owner",
+    );
+  });
+
+  //test 9 : dynamic pricing test: Check if the vending machine updates the price of soda based on changes from the oracle and reflects the new price in purchase transactions
+  it("Should update price via oracle and reflect in vending machine", async function () {
+    const { owner, vendingMachine, sodaVendor, buyer } = await loadFixture(
+      vendingMachineDeploy,
+    );
+
+    // price change
+    await sodaVendor.connect(owner).setPrice(2);
+
+    // correct payment → success
+    await expect(vendingMachine.connect(buyer).buySoda({ value: 2 })).to.emit(
+      vendingMachine,
+      "SodaPurchase",
+    );
+
+    // wrong payment → fail
+    await expect(
+      vendingMachine.connect(buyer).buySoda({ value: 1 }),
+    ).to.be.revertedWith("Incorrect Payment amount for Soda");
   });
 });
