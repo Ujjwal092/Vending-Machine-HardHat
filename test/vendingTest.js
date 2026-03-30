@@ -24,14 +24,17 @@ describe("Testing our Vending Machine", function () {
     return { owner, vendingMachine, sodaVendor, buyer };
   }
 
+  //checking if the owner of vending machine is same as deployer or not, if not then test will fail
   it("Should Correctly set the Deployer as owner", async function () {
     const { owner, vendingMachine } = await loadFixture(vendingMachineDeploy);
 
     //    const ownerOfVendingMachine = await vendingMachine.owner();
 
     expect(await vendingMachine.owner()).to.equal(owner.address);
+    //await andar use kiye h coz jab tk owner ka address nai aata tb tk check naai kr skte
   });
 
+  //test 2: Check if the price is set correctly in the soda vendor if yes test
   it("Should Revert if some Payment is failed", async function () {
     const { buyer, vendingMachine, sodaVendor } = await loadFixture(
       vendingMachineDeploy,
@@ -42,9 +45,10 @@ describe("Testing our Vending Machine", function () {
 
     await expect(
       vendingMachine.connect(buyer).buySoda({ value: price }),
-    ).to.be.revertedWith("Incorrect Payment amount for Soda");
+    ).to.be.revertedWith("Incorrect Payment amount for Soda"); //in case buyer is sending incorrect amount of ether, the transaction should be reverted with this error message so await is used outside expect to wait for the transaction to be processed and then check if it was reverted with the expected error message. If the transaction is not reverted or if it is reverted with a different error message, the test will fail.
   });
 
+  //test 3: Check if the buyer can successfully purchase a soda and the stock decreases accordingly
   it("Should prevent non-owners from withdrawing funds", async function () {
     const { buyer, vendingMachine, sodaVendor } = await loadFixture(
       vendingMachineDeploy,
@@ -52,13 +56,14 @@ describe("Testing our Vending Machine", function () {
 
     const price = await sodaVendor.getPrice();
 
-    await vendingMachine.connect(buyer).buySoda({ value: price });
+    await vendingMachine.connect(buyer).buySoda({ value: price }); //buyer successfully bought a soda
 
     await expect(vendingMachine.connect(buyer).withdraw()).to.be.revertedWith(
       "You are not a Owner",
-    );
+    ); // non-owners should not be able to withdraw funds, so we expect this transaction to be reverted with the error message "You are not a Owner". If the transaction is not reverted or if it is reverted with a different error message, the test will fail.
   });
 
+  //test 4: Check if the vending machine prevents purchases when the stock is depleted
   it("Should Prevent Buying Soda if stock is zero", async function () {
     const { buyer, vendingMachine, sodaVendor } = await loadFixture(
       vendingMachineDeploy,
@@ -77,6 +82,7 @@ describe("Testing our Vending Machine", function () {
     ).to.be.revertedWith("Soda, out of stock!");
   });
 
+  //test 5: Check if the owner can successfully withdraw funds from the vending machine
   it("Should transfer the full balance to the owner upon withdrawal", async function () {
     const { buyer, vendingMachine, sodaVendor, owner } = await loadFixture(
       vendingMachineDeploy,
@@ -92,6 +98,7 @@ describe("Testing our Vending Machine", function () {
     ).to.changeEtherBalances([vendingMachine, owner], [-price, price]);
   });
 
+  //test 6: Check if the correct event is emitted when a soda is purchased
   it("Should emit a SodaPurchase event with correct arguments on success", async function () {
     const { buyer, vendingMachine, sodaVendor } = await loadFixture(
       vendingMachineDeploy,
