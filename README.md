@@ -1,12 +1,12 @@
-# 🥤 Decentralized Vending Machine (Solidity + Hardhat)
+# 🥤 Decentralized Vending Machine (Full Stack Web3)
 
-A fully tested **decentralized vending machine system** built using **Solidity, Hardhat, and Ethers.js**, featuring **oracle-based dynamic pricing**, **owner-controlled inventory**, and **secure Ether transactions**.
+A **full-stack decentralized vending machine dApp** built using **Solidity, Hardhat, React, and Ethers.js**, deployed on the **Sepolia testnet**, with real blockchain transactions via MetaMask.
 
 ---
 
 ## 🚀 Features
 
-- 🛒 Buy soda using Ether
+- 🛒 Buy soda using ETH (real blockchain transaction)
 - 💰 Dynamic pricing via oracle contract
 - 🔐 Owner-only withdrawal of funds
 - 📦 Inventory management system
@@ -15,53 +15,48 @@ A fully tested **decentralized vending machine system** built using **Solidity, 
 - 📢 Event emission on successful purchase
 - 🧪 Full test coverage using Hardhat & Chai
 - ⛽ Gas usage reporting
+- 🎨 Modern animated UI (React + Tailwind + Framer Motion)
+- 🔗 MetaMask wallet integration
+
+---
+
+## 🌐 Live Demo
+
+>
+
+---
+
+## 📜 Deployed Contracts (Sepolia)
+
+- **VendingMachine:** `0xaC8C7f94ABDE0485BbCC44fC470df0737e583453`
+- **SodaVendor (Oracle):** `0xB5ac915072EE58fb08f7810FE4e001746074AA35`
 
 ---
 
 ## 🧠 Architecture
 
-```text
-User → VendingMachine → SodaVendor (Oracle)
-                     ↘ Ownable (Access Control)
 ```
-
-- **VendingMachine** → Handles purchasing logic & stock
-- **SodaVendor (Oracle)** → Provides dynamic pricing
-- **Ownable** → Restricts critical functions to owner
+User (MetaMask)
+   ↓
+Frontend (React + Ethers.js)
+   ↓
+VendingMachine Contract
+   ↓
+SodaVendor (Oracle)
+```
 
 ---
 
 ## 🛠 Tech Stack
 
 - **Solidity** – Smart contract development
-- **Hardhat** – Development & testing framework
+- **Hardhat** – Development, testing & deployment
 - **Ethers.js** – Blockchain interaction
-- **Hardhat Ignition** – Deployment management
-- **Chai** – Assertion library for testing
-
----
-
-## 📂 Project Structure
-
-```
-├── contracts/
-│   ├── VendingMachine.sol
-│   ├── SodaVendor.sol
-│   ├── Ownable.sol
-│   └── IoraclePrice.sol
-│
-├── ignition/
-│   └── modules/
-│
-├── test/
-│   └── VendingMachine.test.js
-│
-├── screenshots/
-│   └── test-result.png
-│
-├── hardhat.config.js
-└── package.json
-```
+- **React (Vite)** – Frontend
+- **Tailwind CSS** – Styling
+- **Framer Motion** – Animations
+- **MetaMask** – Wallet integration
+- **Sepolia Testnet** – Deployment network
 
 ---
 
@@ -81,82 +76,75 @@ npm install
 npx hardhat test
 ```
 
-### ⛽ Gas Report
+---
+
+## 🚀 Deploy Contracts
 
 ```bash
-REPORT_GAS=true npx hardhat test
+npx hardhat run scripts/deploy.js --network sepolia
 ```
 
 ---
 
-## 🧾 Run Local Blockchain
+## 🎨 Frontend Setup
 
 ```bash
-npx hardhat node
+cd frontend
+npm install
+npm run dev
 ```
 
 ---
 
-## 🚀 Deploy Contract (Ignition)
+## 🔐 Environment Variables
 
-```bash
-npx hardhat ignition deploy ./ignition/modules/Deploy.js
+Create a `.env` file in root:
+
+```
+SEPOLIA_RPC_URL=your_rpc_url
+PRIVATE_KEY=your_wallet_private_key
 ```
 
 ---
 
-## 📸 Test Results & Gas Report
+## 📸 Proof of Transaction
 
-<p align="center">
-  <img src="./screenshots/test-result.png" width="850"/>
-</p>
+- Successfully purchased soda via MetaMask
+- ETH deducted from wallet
+- Transaction confirmed on Sepolia
+- Event emitted on-chain
 
 ---
 
-## 📜 Smart Contract Functionalities
+## 🧾 Smart Contract Functionalities
 
 ### 🛒 Buy Soda
 
-- Fetches price from oracle contract
-- Requires exact Ether payment
-- Reduces stock after successful purchase
-
----
+- Fetches price from oracle
+- Requires exact ETH payment
+- Reduces stock on success
 
 ### 🔁 Restock Inventory
 
 - Only owner can restock
-- Prevents invalid input (zero stock)
-
----
+- Prevents invalid input
 
 ### 💰 Withdraw Funds
 
-- Only owner can withdraw contract balance
-- Secure transfer of full balance
+- Only owner can withdraw full balance
 
----
+### 💲 Dynamic Pricing
 
-### 💲 Dynamic Pricing (Oracle)
-
-- Price managed in separate contract (`SodaVendor`)
-- Can be updated without redeploying vending machine
-
----
-
-### 📢 Events
-
-- Emits `SodaPurchase` event on successful purchase
+- Managed via separate oracle contract
+- Can update price without redeploying main contract
 
 ---
 
 ## 🧪 Test Coverage
 
-Includes comprehensive test cases:
-
 - ✔️ Owner validation
-- ✔️ Payment validation (correct & incorrect)
-- ✔️ Unauthorized withdrawal prevention
+- ✔️ Payment validation
+- ✔️ Unauthorized access prevention
 - ✔️ Stock depletion handling
 - ✔️ Restocking functionality
 - ✔️ Oracle price updates
@@ -166,14 +154,34 @@ Includes comprehensive test cases:
 
 ## 📈 Future Improvements
 
-- 🎨 Frontend (React + Ethers.js)
-- 🌐 Deployment on Sepolia testnet
+- 🌐 Deploy frontend (Vercel)
+- 📊 Admin dashboard
 - 🧠 Chainlink oracle integration
 - 🛍 Multi-product vending system
-- 📊 Admin dashboard
+- 📱 Mobile UI optimization
 
 ---
 
+## 📸 UI Preview
+
+Before --
+
+<p align="center">
+  <img src="./screenshots/ss1 (2).png" width="800"/>
+</p>
+
+After--
+
+p align="center">
+<img src="./screenshots/ss1 (1).png" width="800"/>
+
+--Deployed Contract
+
+p align="center">
+<img src="./screenshots/test-result.png" width="800"/>
+
+</p>
+</p>
 ## 🤝 Contributing
 
 Feel free to fork and improve this project!
@@ -189,4 +197,4 @@ MIT License
 ## 💡 Author
 
 **Ujjwal Kumar**
-Built with ❤️ using Solidity & Hardhat
+Built with ❤️ using Web3 technologies 🚀
