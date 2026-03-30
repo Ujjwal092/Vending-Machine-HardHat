@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from "react";
 import { getContract } from "./contract";
 import { ethers } from "ethers";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -43,7 +45,7 @@ function App() {
     setStock(Number(s));
   };
 
-  // 🛒 Buy Soda
+  //  Buy Soda
   const buySoda = async () => {
     setLoading(true);
     try {
