@@ -174,12 +174,6 @@ Includes comprehensive test cases:
 
 ---
 
-## 🧾 Resume Highlight
-
-> Built a decentralized vending machine smart contract with oracle-based dynamic pricing, owner-controlled inventory, and comprehensive test coverage using Hardhat.
-
----
-
 ## 🤝 Contributing
 
 Feel free to fork and improve this project!
@@ -196,16 +190,3 @@ MIT License
 
 **Ujjwal Kumar**
 Built with ❤️ using Solidity & Hardhat
-
-## 💡 Author
-
-Ujjwal Kumar
-Built with ❤️ using Hardhat & Solidity
-
----
-
-## 📸 Test Results & Gas Report
-
-<p align="center">
-  <img src="./screenshots/test-result.png" width="800"/>
-</p>
