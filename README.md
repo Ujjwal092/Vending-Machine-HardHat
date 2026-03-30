@@ -147,9 +147,13 @@ MIT License
 
 ## 💡 Author
 
+Ujjwal Kumar
 Built with ❤️ using Hardhat & Solidity
 
-```
+---
 
-![OUTPUT](<Screenshot 2026-03-30 115431.png>)
-```
+## 📸 Test Results & Gas Report
+
+<p align="center">
+  <img src="./screenshots/test-result.png" width="800"/>
+</p>
